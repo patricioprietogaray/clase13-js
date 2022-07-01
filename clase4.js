@@ -78,3 +78,108 @@ console.log('leo edad desde el root scope (alcance): ', edad, nombre);
 // superior hasta llegar a variable global que se encuentra en el scope raiz 
 
 //////
+/* enfoque a utilizar programacion funcional
+ react trabaja con componentes (funciones)
+piezas reutilizables.
+
+funciones simples y aisladas, sin efecto secundarios fuera
+del alcance de la funcion: INPUT -> PROCESS -> OUTPUT
+1.Funciones aisladas: no depende del estado del programa, que 
+incluye variables globales que están sujetas a cambios.
+2.Funciones puras: la misma entrada siempre da la misma salida.
+3.Funciones con efectos secundarios limitados: cualquier cambio
+o mutacion en el estado del programa fuera de la funcion se controla
+cuidadosamente. 1:09
+*/
+// funcion simple recibe un parametro (usuario)
+// devuelve un string que se visualiza con el console.log
+function saludarUsuario(usuario) {
+    return `Hola ${usuario}`;
+}
+
+// otra funcion simple
+function despedirUsuario(usuario) {
+    return `Adios ${usuario}`;
+}
+
+// ahora esta funcion llamará a otra funcion
+// 'creadora de funciones' con callback
+// el callback es pasado como parametro en una fucion
+// desde esa funcion callback se usa como "un intermediario"
+// que llama a otra función
+// llamo a la funcion crearsaludo y a su vez el callback llama
+// a otra funcion para mostrar el saludo eso callback se pasa 
+// como parametro para mostrar la funcion del "ultmo nivel."
+function crearSaludo(usuario, callback) {
+    return callback(usuario);
+    // retorna el nombre de la funcion con su parametro
+}
+
+
+console.log(saludarUsuario('pepe'));
+console.log(despedirUsuario(`pedro`));
+// llamar al creador de funciones
+console.log(crearSaludo(`Pincho`, saludarUsuario));
+console.log(crearSaludo(`Pincho`, despedirUsuario));
+
+/* 
+la programacion funcional:
+funciones sencillas,
+lo más breves posibles,
+reutilizables,
+faciles de debuguear
+********
+si el código es mas largo
+se hace dificil debuguear
+se es dificil escalar
+se hace más dificil reutilizar
+se es dificil leerla
+rompiendo con el paradigma de la programacion funcional 
+
+se pueden crear funciones hijas del creador de funciones
+pero al creador de funciones NO SE TOCA, NO SE MODIFICA.
+solo se agregan las funciones hijas o que son llamadas
+mediante el creador de funciones!
+*/
+
+
+
+// otro ejemplo de programacion funcional
+/* Pregunta con la funcion servirBebida: 
+¿de donde sale bebidaCorrespondiente? OUTPUT (RETURN) 
+¿Que parametros recibe?     INPUT  (cantidad y callback)
+¿que proceso tiene que ejecutar? PROCESS
+
+Definir con arrow function lo unico que hace es retornar un string
+uso de arreglo y un for para recorrer ese arreglo
+
+
+*/
+// Arrow Function
+const servirTe = () => 'Taza de Té';
+const servirCafe = () => 'Taza de Café';
+const servirAgua = () => 'Vaso de Agua';
+const servirGaseosa = () => 'Vaso de Gaseosa';
+
+function servirBebida (cantidad, callback) {
+    // definir un arreglo vacio
+    const bebidaCorrespondientes = [];
+
+    for (let i = 0; i < cantidad; i++) {
+        // bebida carga el callback recibido
+        const bebida = callback();
+        // agregar al array con la funcion llamada por callback
+        bebidaCorrespondientes.push(bebida);
+    }
+    return bebidaCorrespondientes;
+}
+
+// llamo a la funcion para servir tazas de cafe
+const tazasDeCafe = servirBebida(10, servirCafe);
+console.log(tazasDeCafe);
+
+// llamo a la funcion para servir vasos de gaseosa
+const vasosDeGaseosa = servirBebida(50, servirGaseosa);
+console.log(vasosDeGaseosa);
+
+/////////////// 
