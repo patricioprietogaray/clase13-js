@@ -15,6 +15,8 @@ const impuestosPorProductos=[
     {nombre:'Ingresos Brutos', importe: 0.1},
 ]
 
+let detalleFacturado = [];
+
 const calculoImpuestos = (costo, impuesto) => {
     // let precioDeCosto = costo;
     
@@ -55,8 +57,20 @@ function buscoProducto(id) {
     return resultado;
 }
 
+
+function cargarProductosFacturaDetalle(cantidad, id) {
+    // listado.push({'Cantidad\tDetalle\t\t\tPrecio Unitario\tPrecio Total'});
+    let busquedaProducto=buscoProducto(id);
+    let nombreProducto = busquedaProducto.nombre;
+    let precUnit = busquedaProducto.precio;
+    let precTotal = cantidad * precUnit;
+    detalleFacturado.push(`{Cantidad: ${cantidad}, Detalle: ${nombreProducto}, Precio Unitario: ${precUnit}, Precio Total: ${precTotal}}`);
+}
 // console.log(recorroCadaProducto(electrodomesticos));
 
+// cargarProductosFacturaDetalle(10, 1);
+// cargarProductosFacturaDetalle(5,2);
+// console.log(detalleFacturado);
 
 // console.log(buscoProducto(2));
 
