@@ -183,3 +183,47 @@ const vasosDeGaseosa = servirBebida(50, servirGaseosa);
 console.log(vasosDeGaseosa);
 
 /////////////// 
+
+// iterar con arrays
+// ya visto con un for
+let profesores = ['Fosco', 'Gomez', 'De Luca', 'Jaunsaras', 'Garcia', 'Strano'];
+
+
+// sin callback
+console.log('for (i=0; i<profesores.length; i++) {');
+for (i=0; i<profesores.length; i++) {
+    console.log(profesores[i]);
+}
+
+
+// sintactic sugart - azucar sintactica
+// for each es 'para cada uno' es una pieza de código
+// que se ejecutara en cada uno
+
+// con callback
+console.log('profesores.forEach(element => {');
+profesores.forEach(elemento => {     
+    console.log(elemento);
+});
+
+// de la forma larga
+console.log('profesores.forEach(function(elemento, indice) {')
+profesores.forEach(function(elemento) {
+    console.log(elemento);
+})
+
+let profesoresComoObjeto=[
+    {nombre: 'Patricia', apellido:'Fosco', asignatura:'Analisis matemático'},
+    {nombre: 'Cristian', apellido:'Gomez', asignatura:'Varias'},
+    {nombre: 'Eliana', apellido:'De Luca', asignatura:'Ingles Técnico'},
+    {nombre: 'Gilda', apellido:'Jaunsaras', asignatura:'Algebra'},
+    {nombre: '', apellido:'Strano', asignatura:'Estadística'},
+];
+
+profesoresComoObjeto.forEach(function(elemento) {  //function(elemento, indice)
+    // console.log(`Nombre: ${profesoresComoObjeto[indice].nombre}, Apellido: ${profesoresComoObjeto[indice].apellido}, Asignatura: ${profesoresComoObjeto[indice].asignatura}`);
+    console.log(`Nombre: ${elemento.nombre}, Apellido: ${elemento.apellido}, Asignatura: ${elemento.asignatura}`);
+})
+
+
+/////
