@@ -15,7 +15,6 @@ const impuestosPorProductos=[
     {nombre:'Ingresos Brutos', importe: 0.1},
 ]
 
-let detalleFacturado = [];
 
 const calculoImpuestos = (costo, impuesto) => {
     // let precioDeCosto = costo;
@@ -42,6 +41,7 @@ const calculoImpuestos = (costo, impuesto) => {
     return retorna;
 }
 
+// recorroCadaProducto calcula precio final
 function recorroCadaProducto(electrodomesticos) {
     electrodomesticos.forEach(elemento => {
         const calcular = calculoImpuestos(elemento.precio, impuestosPorProductos);
@@ -57,7 +57,7 @@ function buscoProducto(id) {
     return resultado;
 }
 
-
+// cargarProductosFacturaDetalle usa busquedaProducto
 function cargarProductosFacturaDetalle(cantidad, id) {
     // listado.push({'Cantidad\tDetalle\t\t\tPrecio Unitario\tPrecio Total'});
     let busquedaProducto=buscoProducto(id);
@@ -65,7 +65,36 @@ function cargarProductosFacturaDetalle(cantidad, id) {
     let precUnit = busquedaProducto.precio;
     let precTotal = cantidad * precUnit;
     detalleFacturado.push(`{Cantidad: ${cantidad}, Detalle: ${nombreProducto}, Precio Unitario: ${precUnit}, Precio Total: ${precTotal}}`);
+    totalAFacturar = precTotal + totalAFacturar;
 }
+
+
+
+// generador de funciones
+// estructura de la factura
+function facturador() {
+    fecha = Date();
+    cargarProductosFacturaDetalle(10,  1);
+    cargarProductosFacturaDetalle( 2,  2);
+    cargarProductosFacturaDetalle(12,  3);
+    cargarProductosFacturaDetalle( 2,  4);
+    cargarProductosFacturaDetalle(10,  5);
+
+
+
+    console.log('La fecha de la factura es',fecha);
+    console.log('Detalle de los articulos comprados:');
+    console.log(detalleFacturado);
+    console.log('El total a cobrar es de $',totalAFacturar);
+}
+
+// variables globales
+let detalleFacturado = [];
+let fecha;
+let totalAFacturar=0;
+
+facturador();
+
 // console.log(recorroCadaProducto(electrodomesticos));
 
 // cargarProductosFacturaDetalle(10, 1);
