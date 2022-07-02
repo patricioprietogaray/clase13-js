@@ -226,4 +226,125 @@ profesoresComoObjeto.forEach(function(elemento) {  //function(elemento, indice)
 })
 
 
-/////
+/////  Facturador
+
+const electrodomesticos = [
+    {id: 1, nombre:'Televisor', precio: 40000, color:'Gris'},
+    {id: 2, nombre:'Heladera', precio: 100000, color:'Blanco'},
+    {id: 3, nombre:'PC', precio: 100000, color:'Negro'},
+    {id: 4, nombre:'Licuadora', precio: 10000, color:'Rojo'},
+    {id: 5, nombre:'Aspiradora', precio: 20000, color:'Amarillo'},
+    {id: 6, nombre:'Parlante', precio: 50000, color:'Negro'},
+    {id: 7, nombre:'Microondas', precio: 20000, color:'Azul'},
+    {id: 8, nombre:'Lavarropa', precio: 70000, color:'Blanco'},
+]
+
+const impuestosPorProductos=[
+    {nombre:'IVA', importe: 0.21},
+    {nombre:'Importación', importe: 0.3},
+    {nombre:'Ingresos Brutos', importe: 0.1},
+]
+
+
+const calculoImpuestos = (costo, impuesto) => {
+    // let precioDeCosto = costo;
+    
+    let iva, importacion, ingresosBrutos, retorna;
+    
+    for(let i=0; i<impuesto.length; i++) {
+        switch(i) {
+            case 0:
+                iva = costo * impuesto[i].importe;
+                break;
+            case 1:
+                importacion = costo * impuesto[i].importe;
+                break;
+            case 2:
+                ingresosBrutos = costo * impuesto[i].importe;
+                break;
+            default:
+                console.log('Impuesto inexistente, no se lo sugieras a un diputado');
+        }
+    }
+    retorna = costo + iva + importacion + ingresosBrutos;
+
+    return retorna;
+}
+
+// recorroCadaProducto calcula precio final
+function recorroCadaProducto(electrodomesticos) {
+    electrodomesticos.forEach(elemento => {
+        const calcular = calculoImpuestos(elemento.precio, impuestosPorProductos);
+        
+        console.log(`Electrodoméstico: ${elemento.nombre}, Precio de Venta: ${calcular}, Color: ${elemento.color}`);
+
+    });
+}
+
+// encontrar producto por id
+function buscoProducto(id) {
+    const resultado = electrodomesticos.find( aparato => aparato.id == id);
+    return resultado;
+}
+
+// cargarProductosFacturaDetalle usa busquedaProducto
+function cargarProductosFacturaDetalle(cantidad, id) {
+    // listado.push({'Cantidad\tDetalle\t\t\tPrecio Unitario\tPrecio Total'});
+    let busquedaProducto=buscoProducto(id);
+    let nombreProducto = busquedaProducto.nombre;
+    let precUnit = busquedaProducto.precio;
+    let precTotal = cantidad * precUnit;
+    detalleFacturado.push(`{Cantidad: ${cantidad}, Detalle: ${nombreProducto}, Precio Unitario: ${precUnit}, Precio Total: ${precTotal}}`);
+    totalAFacturar = precTotal + totalAFacturar;
+}
+
+
+
+// generador de funciones
+// estructura de la factura
+function facturador() {
+    fecha = Date();
+    cargarProductosFacturaDetalle(10,  1);
+    cargarProductosFacturaDetalle( 2,  2);
+    cargarProductosFacturaDetalle(12,  3);
+    cargarProductosFacturaDetalle( 2,  4);
+    cargarProductosFacturaDetalle(10,  5);
+
+
+
+    console.log('La fecha de la factura es',fecha);
+    console.log('Detalle de los articulos comprados:');
+    console.log(detalleFacturado);
+    console.log('El total a cobrar es de $',totalAFacturar);
+}
+
+// variables globales
+let detalleFacturado = [];
+let fecha;
+let totalAFacturar=0;
+
+facturador();
+
+
+
+///////////// callback
+// ejemplo de callback
+
+const profesores = ['Fosco', 'Gomez', 'De Luca', 'Jaunsaras', 'Garcia', 'Strano', 'Pavka', 'Zanni'];
+
+// callback mostrará por pantalla el listado de cada profesor
+// en una linea nueva cada uno gracias al foreach
+function callback(cadaProfesor) {
+    console.log(`Te presento al profesor ${cadaProfesor}`);
+}
+
+// callback(profesores) muestra todos los profesores en una sola linea
+
+// se debe hacer un foreach para que muestre
+// cada profesor en linea nueva
+profesores.forEach(callback);
+
+// definir en un arreglo el listado de profesores
+// la funcion callback 
+
+////////////
